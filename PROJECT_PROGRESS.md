@@ -18,9 +18,15 @@
 
 ---
 
-## Phase 2: Data Preprocessing & Leakage-Free Splitting (UPCOMING)
-* **Status:** Pending
-* **Planned Tasks:**
-  * Handle missing values and outliers (IQR capping).
-  * Enforce strict stratified train/test splitting before feature selection to avoid data leakage.
-  * Apply feature scaling/normalization.
+## Phase 2: Data Preprocessing & Leakage-Free Splitting (COMPLETED)
+* **Status:** Finished
+* **Actions Taken:**
+  * Cleaned dataset metadata by dropping uninformative and leak-prone identifier columns (`timestamp`, `timestamp_start`, `timestamp_end`, `device_mac`)[cite: 3, 15].
+  * Filtered out text/string features to isolate 71 pure numeric columns for robust modeling[cite: 15].
+  * Handled missing values via median imputation across the feature space[cite: 15].
+  * Enforced a strict, leakage-free **70/30 stratified train/test split** maintaining class distribution proportionality[cite: 15].
+  * Applied feature normalization using `StandardScaler` strictly fitted on the training split only, preventing data leakage into the test set[cite: 15].
+  * **Preprocessing Outputs & Dimensions:**
+    * Training Partition Shape: 479,969 rows, 71 features (`train_processed.parquet`)[cite: 15]
+    * Testing Partition Shape: 205,702 rows, 71 features (`test_processed.parquet`)[cite: 15]
+    * Fitted Scaler Artifact: Saved locally as `scaler.pkl` in the `data/` directory[cite: 15]
